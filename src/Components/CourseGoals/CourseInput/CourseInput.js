@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from "../../UI/Button/Button";
+import ErrorModal from '../../UI/ErrorModal/ErrorModal';
 
 const MainForm = styled.form`
   width:500px;
@@ -40,6 +41,11 @@ const MainForm = styled.form`
 const CourseInput= props=>{
   const [enteredTitle,SetEneteredTitle] = useState('');
   const [isValid,SetIsValid] = useState(true);
+  const [showErrorModal,SetShowErrorModal] = useState(false);
+
+  const hideErrorModalHandler = ()=>{
+    SetShowErrorModal(false);
+  }
 
   const titleChangeHandler = e =>{
     SetIsValid(true);
@@ -49,6 +55,7 @@ const CourseInput= props=>{
     e.preventDefault();
     if(enteredTitle.trim()===''){
       SetIsValid(false);
+      SetShowErrorModal(true);
       return;
     }
     SetEneteredTitle('');
@@ -62,8 +69,13 @@ const CourseInput= props=>{
         <input type="text" value={enteredTitle} onChange={titleChangeHandler}/>
       </div>
       <div className="course-input__actions">
-        <Button type={"submit"} value={"Add Goal"}/>
+        <Button type="submit" value="Add Goal"/>
       </div>
+      <ErrorModal title="Input Invalid"
+       content="input shoudn't be empty!"
+        buttonText="Okay"
+        show={showErrorModal}
+        onHideErrorModal={hideErrorModalHandler}/>
     </MainForm>
   )
 }

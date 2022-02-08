@@ -12,7 +12,7 @@ const SubmitButton = styled.button`
 
 const Button= props=>{
   return(
-    <SubmitButton type={props.type}>
+    <SubmitButton className={props.className} type={props.type} onClick={props.onClick}>
       {props.value}
     </SubmitButton>
   )
